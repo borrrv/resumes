@@ -1,0 +1,34 @@
+{% extends 'base.html'  %}
+{% load thumbnail %}
+{% block title %}
+{{ group.title }}
+{% endblock%}
+
+{% block content%}
+<div class="container py-5">  
+<h1> {{ group.title }}</h1>
+{% for post in page_obj %}
+<hr>
+      {% thumbnail post.image "960x339" crop="center" upscale=False as im %}
+      <div style="float:left; margin-right:100px; margin-top:20px;">
+      <img src="{{ im.url }}" width=290x height=auto align="left" alt="" >
+      </div>
+      {% endthumbnail %}
+  <ul>
+    <li>
+      Автор: 
+      {{ post.author }}
+      </a>
+    </li>
+  </ul>
+  <p>
+    {{ post.name }}
+  </p>
+  <hr>
+<p>
+{{ post.about_me }}
+</p>
+<a href="{% url 'posts:resume_detail' post.id %}">Подробнее</a>
+{% endfor %}
+{% include 'posts/includes/paginator.html' %} 
+{% endblock %}

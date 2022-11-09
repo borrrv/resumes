@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %} Резюме пользователя {{ author }}{% endblock %}
+{% block content %}
+
+<div class="container py-5"> 
+    
+    <p>
+  <article>
+      <li>
+        Автор: {{ post.author.username }}
+      </li>
+      <li>
+        Дата публикации: {{ post.pub_date|date:"d E Y" }} 
+      </li>
+      <hr>
+      {% thumbnail post.image "960x339" crop="center" upscale=False as im %}
+      <div style="float:left; margin-right:100px; margin-top:20px;">
+      <img src="{{ im.url }}" width=290x height=auto align="left" alt="" >
+      </div>
+      <p style="text-indent:111111500px"><h2>{{ post.name }}</h2></p>
+      {% endthumbnail %}
+      <p>{{ post.sex }},
+      родился {{ post.birth_day }}
+      </p>
+      <p>
+      Номер телефона: {{ post.phone_number }}
+      </p>
+      <p>
+        Электронная почта: {{ post.email }}
+      </p> 
+    <p>
+      Проживает: {{ post.city }}
+    </p>
+    <p>
+      Гражданство: {{ post.nationality }}
+    </p>
+    <p>
+      Желаемая должнось: 
+    </p>
+    <hr>
+    {{ post.carrer_objective }}
+    <p>
+    Занятость: {{ post.employment }}
+    </p>
+    <p>
+      Опыт работы: 
+      <hr>
+      {{ post.experience }}
+    </p>
+      Образование: 
+      <hr>
+      {{ post.education }}
+    <p>
+      Языки: {{ post.language }}
+    </p>
+    <p>
+      О себе: 
+      <hr>
+      {{ post.about_me }}
+    </p>
+    <hr>
+            {% if post.author == request.user %}
+            
+            <a class="btn btn-light"
+              href=" {% url 'posts:resume_edit' post.id %}">
+              редактировать резюме
+            </a>  
+            {% endif %}
+
+            {% if post.author == request.user %}
+            
+            <a class="btn btn-light"
+              href=" {% url 'posts:resume_delete' post.id %}">
+              удалить резюме
+            </a>  
+            {% endif %}
+    {% endblock %}
